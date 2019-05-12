@@ -3,9 +3,11 @@ package com.maven.IPOService.controllers;
 import com.maven.IPOService.model.IPO;
 import com.maven.IPOService.model.Menu;
 import com.maven.IPOService.model.OrderInventory;
+import com.maven.IPOService.model.User;
 import com.maven.IPOService.service.IPOServiceImpl;
 import com.maven.IPOService.service.MenuServiceImpl;
 import com.maven.IPOService.service.OrderInventoryServiceImpl;
+import com.maven.IPOService.service.UserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -33,13 +35,17 @@ public class OrderInventoryController {
     @Autowired
     private MenuServiceImpl menuService;
 
+    @Autowired
+    private UserServiceImpl userService;
+
     // Add User api used to create the new User
     @ApiOperation(value = "Add a ipo")
     @RequestMapping(value = "/create-order", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin(origins = "http://localhost:4200")
     public OrderInventory AddOrder(@RequestBody OrderInventory orderInventory) {
         logger.info("orderInventory:" + orderInventory.toString());
-
+        User userObject = userService.getObjectById(orderInventory.getUserId());
+        orderInventory.setClientName(userObject.getUsername());
         OrderInventory DBOrderInventory = orderInventoryServiceImpl.saveObject(orderInventory);
 
         return DBOrderInventory;
@@ -70,6 +76,14 @@ public class OrderInventoryController {
         logger.info("inside UpdateOrderInventory:"+orderInventory.toString());
         OrderInventory DBOrderInventory = orderInventoryServiceImpl.saveObject(orderInventory);
         //menuService.saveObject(new Menu(orderInventory.getIssuerCompany(),"nb-star","/pages/forms/order",false))
+        return DBOrderInventory;
+    }
+
+    @RequestMapping(value = "/get-orderInventory-byIPO", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = "http://localhost:4200")
+        public List<OrderInventory> GetOrderInventory( @RequestParam("ipoId") String ipoId) {
+        logger.info("inside GetOrderInventory:");
+        List<OrderInventory> DBOrderInventory = orderInventoryServiceImpl.findbyIPO(ipoId);
         return DBOrderInventory;
     }
 

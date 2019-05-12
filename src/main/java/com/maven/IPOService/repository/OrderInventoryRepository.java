@@ -16,4 +16,8 @@ public interface OrderInventoryRepository extends JpaRepository<OrderInventory,L
 
     @Query(value = "SELECT * FROM ORDERS where user_id=?1 and ipo_id=?2", nativeQuery = true)
     List<OrderInventory> findbyIds(String clientId , String ipoId);
+
+
+    @Query(value = "SELECT * FROM ORDERS where ipo_id=?1", nativeQuery = true)
+    List<OrderInventory> findbyIPO(String ipoId);
 }

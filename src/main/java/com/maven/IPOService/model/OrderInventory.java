@@ -1,5 +1,7 @@
 package com.maven.IPOService.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -18,10 +20,10 @@ public class OrderInventory implements Serializable {
     private Long id ;
 
     @Column(name ="userId")
-    private String userId ;
+    private Long userId ;
 
     @Column(name ="ipoId")
-    private String ipoId;
+    private Long ipoId;
 
     @Column(name ="quantiy")
     private Long Quantiy;
@@ -32,29 +34,32 @@ public class OrderInventory implements Serializable {
     @Column(name ="mode")
     private String Mode;
 
-    public String getIpoId() {
+    @Column(name ="clientName")
+    private String clientName;
+
+    public Long getIpoId() {
         return ipoId;
     }
 
-    public void setIpoId(String ipoId) {
+    public void setIpoId(Long ipoId) {
         this.ipoId = ipoId;
     }
 
 
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public String getIPOId() {
+    public Long getIPOId() {
         return ipoId;
     }
 
-    public void setIPOId(String IPOId) {
+    public void setIPOId(Long IPOId) {
         this.ipoId = IPOId;
     }
 
@@ -88,6 +93,14 @@ public class OrderInventory implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getClientName() {
+        return clientName;
     }
 
     @Override

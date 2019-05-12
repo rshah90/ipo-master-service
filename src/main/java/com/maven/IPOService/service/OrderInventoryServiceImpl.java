@@ -39,6 +39,11 @@ public class OrderInventoryServiceImpl implements GenericService<OrderInventory>
     };
 
 
+    public List<OrderInventory> findbyIPO(String ipoId){
+        return orderInventoryRepository.findbyIPO(ipoId);
+
+    };
+
     public OrderInventory saveObject(OrderInventory orderInventory){
         return orderInventoryRepository.save(orderInventory);
     };

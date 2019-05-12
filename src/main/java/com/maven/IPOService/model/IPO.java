@@ -1,5 +1,8 @@
 package com.maven.IPOService.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -30,6 +33,8 @@ public class IPO implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
     private Menu menu;
+
+
 
     public Menu getMenu() {
         return menu;
@@ -130,6 +135,9 @@ public class IPO implements Serializable {
     public void setIssueSize(String issueSize) {
         this.issueSize = issueSize;
     }
+
+
+
 
     @Override
     public String toString() {

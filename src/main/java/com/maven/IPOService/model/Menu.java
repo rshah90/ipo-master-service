@@ -1,26 +1,40 @@
 package com.maven.IPOService.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * User class is used to map book object to relational model.
- *
  */
 @Entity
 @Table(name = "menu")
 public class Menu implements Serializable {
 
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     /*@JsonIgnore*/
-    @Column(name ="id")
-    private Long id ;
+    @Column(name = "id")
+    private Long id;
 
+    /*@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "child_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)*/
+    @Transient
+    private List<Children> children;
+
+    public List<Children> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Children> children) {
+        this.children = children;
+    }
 
     @OneToOne(mappedBy = "menu")
     private IPO ipo;
@@ -34,14 +48,16 @@ public class Menu implements Serializable {
     @Column
     private String link;
 
-/*
-    public Menu(String title, String icon, String link, Boolean home) {
+
+
+
+   /* public Menu(String title, String icon, String link, Boolean home) {
         this.title = title;
         this.icon = icon;
         this.link = link;
         this.home = home;
-    }
-*/
+    }*/
+
 
     public Long getId() {
         return id;

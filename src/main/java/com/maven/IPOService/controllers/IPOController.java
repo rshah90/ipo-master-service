@@ -1,9 +1,6 @@
 package com.maven.IPOService.controllers;
 
-import com.maven.IPOService.model.IPO;
-import com.maven.IPOService.model.Menu;
-import com.maven.IPOService.model.User;
-import com.maven.IPOService.model.UserResponse;
+import com.maven.IPOService.model.*;
 import com.maven.IPOService.service.IPOServiceImpl;
 import com.maven.IPOService.service.MenuServiceImpl;
 import com.maven.IPOService.service.UserServiceImpl;
@@ -16,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The Book Controller is used for operations pertaining to User
@@ -34,6 +32,7 @@ public class IPOController {
     @Autowired
     private MenuServiceImpl menuService;
 
+
     // Add User api used to create the new User
     @ApiOperation(value = "Add a ipo")
     @RequestMapping(value = "/create-ipo", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,14 +42,17 @@ public class IPOController {
         ipo.setStatus("Active");
         Menu newMenu = new Menu();
         newMenu.setTitle(ipo.getIssuerCompany());
-        newMenu.setIcon("nb-star");
+        newMenu.setIcon("nb-compose");
         newMenu.setLink("/pages/forms/order");
         newMenu.setHome(false);
+
+
+
         ipo.setMenu(newMenu);
+
+
         IPO DBIPO = ipoService.saveObject(ipo);
 
-
-       // menuService.saveObject(newMenu);
         return DBIPO;
     }
 
@@ -77,6 +79,14 @@ public class IPOController {
     @CrossOrigin(origins = "http://localhost:4200")
     public IPO UpdateIPO(@RequestBody IPO ipo) {
         logger.info("inside UpdateIPO:"+ipo.toString());
+        /*IPO DBIPO = new IPO();
+        Optional<IPO> dbIpo = ipoService.findObjectById(ipo.getId());
+        if(dbIpo.isPresent()) {
+            ipo.setMenu(dbIpo.get().getMenu());
+            return ipoService.saveObject(ipo);
+        }else
+            return new IPO();
+*/
         IPO DBIPO = ipoService.saveObject(ipo);
         //menuService.saveObject(new Menu(ipo.getIssuerCompany(),"nb-star","/pages/forms/order",false))
         return DBIPO;

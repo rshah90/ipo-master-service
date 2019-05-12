@@ -1,5 +1,6 @@
 package com.maven.IPOService.controllers;
 
+import com.maven.IPOService.model.Children;
 import com.maven.IPOService.model.Menu;
 import com.maven.IPOService.model.User;
 import com.maven.IPOService.model.UserResponse;
@@ -12,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,7 +39,30 @@ public class MenuController {
     public List<Menu> GetMenu() {
         logger.info("inside GetMenu:");
         List<Menu>  tabs = menuService.findAllObject();
-        return tabs;
+        List<Menu>  newTabs =  new ArrayList<Menu>();
+        for(Menu tab : tabs){
+            System.out.println("tab.getIcon()"+tab.getIcon());
+                if(tab.getIcon().equalsIgnoreCase("nb-compose")){
+                    List<Children>  newChildren =  new ArrayList<Children>();
+                    Map map = new HashMap();
+                    map.put("id",tab.getId().toString());
+                    newChildren.add(new Children("Orders","/pages/forms/order",map));
+                    newChildren.add(new Children("Customer Report","/pages/forms/clientReport",map));
+                    newChildren.add(new Children("Admin Report","/pages/forms/order",map));
+                    tab.setLink(null);
+                    tab.setChildren(newChildren);
+                    newTabs.add(tab);
+                }else{
+                    newTabs.add(tab);
+                }
+        }
+
+
+        //children object for menu
+
+
+
+        return newTabs;
     }
 
 

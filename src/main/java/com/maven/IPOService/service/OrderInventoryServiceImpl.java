@@ -1,5 +1,6 @@
 package com.maven.IPOService.service;
 
+import com.maven.IPOService.model.AdminResponse;
 import com.maven.IPOService.model.IPO;
 import com.maven.IPOService.model.OrderInventory;
 import com.maven.IPOService.repository.IPORepository;
@@ -35,6 +36,11 @@ public class OrderInventoryServiceImpl implements GenericService<OrderInventory>
 
     public List<OrderInventory> findbyIds(String clientID , String ipoId){
         return orderInventoryRepository.findbyIds(clientID , ipoId);
+
+    };
+
+    public List<AdminResponse> findForAdmin(Long ipoId){
+        return orderInventoryRepository.findForAdmin( ipoId , "Buy" , "Sell");
 
     };
 

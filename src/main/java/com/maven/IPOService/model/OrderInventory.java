@@ -31,11 +31,20 @@ public class OrderInventory implements Serializable {
     @Column(name ="rate")
     private Long Rate;
 
+    @Column(name ="total")
+    private Long total;
+
     @Column(name ="mode")
     private String Mode;
 
     @Column(name ="clientName")
     private String clientName;
+
+
+    @Column(name ="creationDate")
+    private String creationDate;
+
+
 
     public Long getIpoId() {
         return ipoId;
@@ -101,6 +110,22 @@ public class OrderInventory implements Serializable {
 
     public String getClientName() {
         return clientName;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
     }
 
     @Override

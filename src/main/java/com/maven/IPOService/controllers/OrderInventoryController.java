@@ -1,9 +1,6 @@
 package com.maven.IPOService.controllers;
 
-import com.maven.IPOService.model.IPO;
-import com.maven.IPOService.model.Menu;
-import com.maven.IPOService.model.OrderInventory;
-import com.maven.IPOService.model.User;
+import com.maven.IPOService.model.*;
 import com.maven.IPOService.service.IPOServiceImpl;
 import com.maven.IPOService.service.MenuServiceImpl;
 import com.maven.IPOService.service.OrderInventoryServiceImpl;
@@ -46,6 +43,7 @@ public class OrderInventoryController {
         logger.info("orderInventory:" + orderInventory.toString());
         User userObject = userService.getObjectById(orderInventory.getUserId());
         orderInventory.setClientName(userObject.getUsername());
+        orderInventory.setTotal(orderInventory.getQuantiy() * orderInventory.getRate());
         OrderInventory DBOrderInventory = orderInventoryServiceImpl.saveObject(orderInventory);
 
         return DBOrderInventory;
@@ -84,8 +82,19 @@ public class OrderInventoryController {
         public List<OrderInventory> GetOrderInventory( @RequestParam("ipoId") String ipoId) {
         logger.info("inside GetOrderInventory:");
         List<OrderInventory> DBOrderInventory = orderInventoryServiceImpl.findbyIPO(ipoId);
+
         return DBOrderInventory;
     }
+
+    @RequestMapping(value = "/get-balanceReport", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = "http://localhost:4200")
+    public List<AdminResponse> GetBalanceReport( @RequestParam("ipoId") Long ipoId) {
+        logger.info("inside GetOrderInventory:");
+        List<AdminResponse> DBOrderInventory = orderInventoryServiceImpl.findForAdmin(ipoId);
+
+        return DBOrderInventory;
+    }
+
 
 
 }

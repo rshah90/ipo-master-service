@@ -1,10 +1,13 @@
 package com.maven.IPOService.service;
 
+import com.maven.IPOService.controllers.OrderInventoryController;
 import com.maven.IPOService.model.AdminResponse;
 import com.maven.IPOService.model.IPO;
 import com.maven.IPOService.model.OrderInventory;
 import com.maven.IPOService.repository.IPORepository;
 import com.maven.IPOService.repository.OrderInventoryRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,7 @@ import java.util.Optional;
  */
 @Service
 public class OrderInventoryServiceImpl implements GenericService<OrderInventory> {
-
+    Logger logger = LoggerFactory.getLogger(OrderInventoryServiceImpl.class);
     @Autowired
     private OrderInventoryRepository orderInventoryRepository;
 
@@ -40,8 +43,9 @@ public class OrderInventoryServiceImpl implements GenericService<OrderInventory>
     };
 
     public List<AdminResponse> findForAdmin(Long ipoId){
-        return orderInventoryRepository.findForAdmin( ipoId , "Buy" , "Sell");
-
+        List<AdminResponse> admin = orderInventoryRepository.findForAdmin( ipoId , "Buy" , "Sell");
+        logger.info("admin"+admin.get(0).toString());
+        return admin;
     };
 
 

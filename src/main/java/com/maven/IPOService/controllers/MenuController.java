@@ -46,9 +46,9 @@ public class MenuController {
                     List<Children>  newChildren =  new ArrayList<Children>();
                     Map map = new HashMap();
                     map.put("id",tab.getId().toString());
-                    newChildren.add(new Children("Orders","/pages/forms/order",map));
+                    newChildren.add(new Children("Orders","/pages/forms/orderEntry",map));
                     newChildren.add(new Children("Customer Report","/pages/forms/clientReport",map));
-                    newChildren.add(new Children("Admin Report","/pages/forms/order",map));
+                    newChildren.add(new Children("Admin Report","/pages/forms/adminReport",map));
                     tab.setLink(null);
                     tab.setChildren(newChildren);
                     newTabs.add(tab);

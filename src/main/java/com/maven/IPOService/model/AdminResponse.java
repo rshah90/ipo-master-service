@@ -12,24 +12,23 @@ import java.io.Serializable;
  *
  */
 
+
 public class AdminResponse implements Serializable {
 
 
     private String ClientName ;
-    private Long BuyerAmount ;
+    private Long Amount ;
 
 
-    private Long SellerAmount ;
+    private Long Quantity ;
 
-    private Long balance ;
-    private Long pendingQuantity ;
+    private String Mode ;
 
-    public AdminResponse(String clientName, Long buyerAmount, Long sellerAmount, Long balance, Long pendingQuantity) {
-        ClientName = clientName;
-        BuyerAmount = buyerAmount;
-        SellerAmount = sellerAmount;
-        this.balance = balance;
-        this.pendingQuantity = pendingQuantity;
+    public AdminResponse(String clientName, Long Amount, Long Quantity, String mode) {
+        this.ClientName = clientName;
+        this.Amount = Amount;
+        this.Quantity = Quantity;
+        this.Mode = mode;
     }
 
     public String getClientName() {
@@ -40,35 +39,37 @@ public class AdminResponse implements Serializable {
         ClientName = clientName;
     }
 
-    public Long getBuyerAmount() {
-        return BuyerAmount;
+    public Long getAmount() {
+        return Amount;
     }
 
-    public void setBuyerAmount(Long buyerAmount) {
-        BuyerAmount = buyerAmount;
+    public void setAmount(Long amount) {
+        Amount = amount;
     }
 
-    public Long getSellerAmount() {
-        return SellerAmount;
+    public Long getQuantity() {
+        return Quantity;
     }
 
-    public void setSellerAmount(Long sellerAmount) {
-        SellerAmount = sellerAmount;
+    public void setQuantity(Long quantity) {
+        Quantity = quantity;
     }
 
-    public Long getBalance() {
-        return balance;
+    public String getMode() {
+        return Mode;
     }
 
-    public void setBalance(Long balance) {
-        this.balance = balance;
+    public void setMode(String mode) {
+        Mode = mode;
     }
 
-    public Long getPendingQuantity() {
-        return pendingQuantity;
-    }
-
-    public void setPendingQuantity(Long pendingQuantity) {
-        this.pendingQuantity = pendingQuantity;
+    @Override
+    public String toString() {
+        return "AdminResponse{" +
+                "ClientName='" + ClientName + '\'' +
+                ", Amount=" + Amount +
+                ", Quantity=" + Quantity +
+                ", Mode='" + Mode + '\'' +
+                '}';
     }
 }

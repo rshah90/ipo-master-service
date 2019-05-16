@@ -22,11 +22,19 @@ public interface OrderInventoryRepository extends JpaRepository<OrderInventory,L
     @Query(value = "SELECT * FROM ORDERS where ipo_id=?1", nativeQuery = true)
     List<OrderInventory> findbyIPO(String ipoId);
 
+/*
 @Query(value ="select \n" +
         "new com.maven.IPOService.model.AdminResponse(buyer.clientName,SUM(buyer.Quantiy * buyer.Rate) ,SUM(seller.Quantiy * seller.Rate) ,(SUM(buyer.Quantiy * buyer.Rate) - SUM(seller.Quantiy * seller.Rate) ) ,SUM(buyer.Quantiy) - SUM(seller.Quantiy) )\n" +
         "from OrderInventory buyer , OrderInventory seller " +
-        "where buyer.ipoId=?1 and seller.ipoId=buyer.ipoId and buyer.Mode =?2 and seller.Mode =?3 " +
+        "where buyer.ipoId=?1 and seller.ipoId=buyer.ipoId and buyer.id <> seller.id and buyer.Mode =?2 and seller.Mode =?3 " +
         "GROUP BY buyer.clientName")
+*/
+
+@Query("select  new com.maven.IPOService.model.AdminResponse(clientName , sum(Quantiy * Rate) ,sum(Quantiy),Mode\n" +
+        ")\n" +
+        "from OrderInventory\n" +
+        "where ipoId = ?1 \n" +
+        "Group by clientName , Mode" )
 List<AdminResponse> findForAdmin(Long ipoId , String buy  , String Sell);
 
 }

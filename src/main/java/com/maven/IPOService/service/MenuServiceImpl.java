@@ -20,6 +20,9 @@ public class MenuServiceImpl{
         return menuRepository.save(menu);
     };
 
+    public void deleteObject(Long id){
+        menuRepository.deleteById(id);
+    };
 
     public List<Menu> findAllObject(){
         return menuRepository.findAll();

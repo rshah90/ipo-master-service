@@ -79,17 +79,24 @@ public class IPOController {
     @CrossOrigin(origins = "http://localhost:4200")
     public IPO UpdateIPO(@RequestBody IPO ipo) {
         logger.info("inside UpdateIPO:"+ipo.toString());
-        /*IPO DBIPO = new IPO();
-        Optional<IPO> dbIpo = ipoService.findObjectById(ipo.getId());
-        if(dbIpo.isPresent()) {
-            ipo.setMenu(dbIpo.get().getMenu());
-            return ipoService.saveObject(ipo);
-        }else
-            return new IPO();
-*/
-        IPO DBIPO = ipoService.saveObject(ipo);
+        logger.info("ipo.getStatus():" + ipo.getStatus());
+        if(ipo.getStatus().equalsIgnoreCase("DeActivated")){
+
+            IPO ipoDetails = ipoService.getObjectById(ipo.getId());
+            logger.info("ipo.():" + ipoDetails.getMenu().getId());
+            Long ipoId = ipoDetails.getMenu().getId();
+            ipoDetails.setMenu(null);
+            IPO DBIPO = ipoService.saveObject(ipo);
+            menuService.deleteObject(ipoId);
+            return DBIPO;
+
+        }else {
+
+            IPO DBIPO = ipoService.saveObject(ipo);
+            return DBIPO;
+        }
         //menuService.saveObject(new Menu(ipo.getIssuerCompany(),"nb-star","/pages/forms/order",false))
-        return DBIPO;
+
     }
 
 
